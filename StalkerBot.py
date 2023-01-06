@@ -28,7 +28,6 @@ async def on_message(message):
 async def on_ready():
     print("Connected!")
 
-# #Kode -----------
 
 current_room = 1
 
@@ -42,7 +41,6 @@ class room:
     def show(self):
         return self.name + "description: " + self.surroundings 
 
-#Klasser & objekter
 
 room_0 = room("Bathroom ", "I am in the bathroom. "
      "I can see my mirror, it's a bit dirty"
@@ -64,7 +62,17 @@ room_4 = room("Door ", "I am in front of the front door"
 "This keyhole is creepy looking for some reason.")
 
 
-
+def show_room(current_room):
+    if current_room == 0:
+        return room_0.show()
+    elif current_room == 1: 
+        return room_1.show()
+    elif current_room == 2:
+        return room_2.show()
+    elif current_room == 3:
+        return room_3.show()
+    elif current_room == 4:
+        return room_4.show()
 
 def move_from_room_0(direction):
     """ Room 0 only has a single exit , which leads north to room 1. """
@@ -103,26 +111,27 @@ def move_from_room_4(direction):
 
 def look_in_room(current_room):
     if current_room == 0:
-    
+        return show_room(current_room)
     elif current_room == 1:
-
+        return show_room(current_room)
     elif current_room == 2: 
-
-    elif current_room == 3: 
-
-    elif current_room == 4: 
+        return show_room(current_room)
+    elif current_room == 3:
+        return show_room(current_room)
+    elif current_room == 4:
+        return show_room(current_room)
 
 #investigate funktion her
-def investigate(current_room, dicetion):
-    if current_room == 0:
-    
-    elif current_room == 1:
+# def investigate(current_room, dicetion):
+#     if current_room == 0:
 
-    elif current_room == 2: 
+#     elif current_room == 1:
 
-    elif current_room == 3: 
+#     elif current_room == 2: 
 
-    elif current_room == 4:
+#     elif current_room == 3: 
+
+#     elif current_room == 4:
 
 @client.event
 async def on_message(message):
@@ -137,22 +146,6 @@ async def on_message(message):
                '"!walk" lets you walk the direction you want (north, west, east, south)',
                '"!quit" you can only use quit if you wish to exit the game']
 
-# def show_room(room_num):
-#     """Display the contents of the given room.
-#     Input:
-#     - room_num : int, the number of the room to show.
-#     """
-#     if room_num == 0:
-#         return room_0.show()
-#     elif room_num == 1: 
-#         return room_1.show()
-#     elif room_num == 2:
-#         return room_2.show()
-#     elif room_num == 3:
-#         return room_3.show()
-#     else:
-#         reply = "You are out of bounds. Room", room_num, "does not exist."
-#         return reply
 
 
 

@@ -28,7 +28,7 @@ async def on_message(message):
 async def on_ready():
     print("Connected!")
 
-# #KODe -----------
+# #Kode -----------
 
 current_room = 1
 
@@ -44,16 +44,26 @@ class room:
 
 #Klasser & objekter
 
-room_0 = room("Bathroom ", "You are in the bathroom "
-    'If you need help type "!help" ')
+room_0 = room("Bathroom ", "I am in the bathroom. "
+     "I can see my mirror, it's a bit dirty"
+     "What is that on the wall?")
     
-room_1 = room("Bedroom ", "You are in the bedroom ")
+room_1 = room("Bedroom ", "I am in my bedroom. "
+"It's rather empty, no pictures on the wall... I really wish I had something to hang"
+"My bed looks comfortable.")
 
-room_2 = room("Livingroom ", "You are in the livingroom")
+room_2 = room("Livingroom ", "I am in the livingroom."
+"Not much living happening here..."
+"There is a window to the side.")
 
-room_3 = room("Kitchen ", "You are in the Kitchen")
+room_3 = room("Kitchen ", "I am in the kitchen"
+"Am I hungry? I may have some food in the frigde."
+"There is something on the wall here aswell, weird.")
 
-room_4 = room("Door ", "You are in front of front door")
+room_4 = room("Door ", "I am in front of the front door"
+"This keyhole is creepy looking for some reason.")
+
+
 
 
 def move_from_room_0(direction):

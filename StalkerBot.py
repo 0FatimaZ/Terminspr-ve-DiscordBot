@@ -103,6 +103,16 @@ def look_in_room(current_room):
     elif current_room == 4: 
 
 #investigate funktion her
+def investigate(current_room, dicetion):
+    if current_room == 0:
+    
+    elif current_room == 1:
+
+    elif current_room == 2: 
+
+    elif current_room == 3: 
+
+    elif current_room == 4:
 
 @client.event
 async def on_message(message):

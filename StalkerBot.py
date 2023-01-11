@@ -1,3 +1,4 @@
+from pdb import Restart
 import discord
 
 intents = discord.Intents.default()
@@ -269,7 +270,7 @@ async def on_message(message):
         if contents.startswith("!quit"):
             message.channel.send("Are you sure you want to quit? y/n")
             if contents.startswith("y"):
-                break
+                Restart
             if contents.startswith("n"):
                 await message.channel.send("Then keep going!")
         elif contents.startswith("!help"):

@@ -92,7 +92,8 @@ def move_from_room_0(direction):
     if direction == "e": 
         return 1
     elif direction == "s":
-       return "(didcription)" 
+       return "There's a note on the wall!!"
+       things_to_find[note1] == True
     else:
         return 0
 
@@ -138,7 +139,7 @@ def look_in_room(current_room):
 
 def investigate(current_room, direction):
     if current_room == 0:
-        if dicetion == "s":
+        if direction == "s":
             if things_to_find[note1] == True:
                 if investigate_things[hole] == True:
                     return "How long has that hole been there?"
@@ -150,7 +151,7 @@ def investigate(current_room, direction):
                     return "I don't dare to look through it."
             else:
                 "Just a sad wall."
-        elif dicetion == "n":
+        elif direction == "n":
             return "Nothing but my own tired reflection."
         elif direction == "e":
             return "The way to my bedroom."

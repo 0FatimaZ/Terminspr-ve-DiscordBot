@@ -5,7 +5,6 @@ intents = discord.Intents.default()
 intents.message_content = True
 intents.reactions = True
 intents.members = True
-things = 0
 
 
 client = discord.Client(intents=intents)
@@ -21,17 +20,11 @@ def get_token():
 async def on_ready():
     print("Connected!")
 
-@client.event
-async def on_message(message):
-    contents = message.content
-    user = message.author.id 
 
-@client.event
-async def on_ready():
-    print("Connected!")
 
 
 current_room = 1
+things = 0
 
 
 #Klasser & objekter
@@ -42,6 +35,8 @@ class room:
         
     def show(self):
         return self.name + "description: " + self.surroundings 
+
+#Dictionaries
 
 things_to_find = {
     "note1" : False,
@@ -148,6 +143,12 @@ def look_in_room(current_room):
 #fukntion til dialog
 
 def dialog_1(choice):
+    print("Something is in the keyhole... what is that?")
+    input()
+    print("...")
+    input()
+    print("AAAGH!")
+    input()
     print("Unknown: 'My... what a pretty being you are.'")
     input()
     print("'Who... who are you?'")
@@ -171,6 +172,18 @@ def dialog_1(choice):
     print("Should I open the door? yes or no?")
     input()
     if choice == "yes":
+        print("'Fine. I'm going to open the door. Step back.'")
+        input()
+        print("'Unknown: 'Thank you gorgeous, you won't regret it.'")
+        input()
+        print("'That's weird, I can't open it.'")
+        input()
+        print("Unknown: 'It must be locked. Do you know where the key is?'")
+        input()
+        print("'Yeah, let me go get it'")
+        input()
+    if choice == "no":
+        print("'I am not opening the door to a stranger.'")
 
 def investigate(current_room, direction):
     if current_room == 0:
@@ -319,9 +332,9 @@ async def on_message(message):
         elif contents.startswith("!look"):
             look_in_room(current_room)
         elif contents.startswith("!walk"):
+            direction = contents[6:]
+            print(direction)
             if current_room == 0:
-                direction = contents[6:]
-                print(direction)
                 current_room = move_from_room_0(direction)
             elif current_room == 1:
                 current_room = move_from_room_1(direction)
@@ -329,11 +342,13 @@ async def on_message(message):
                     current_room = move_from_room_2(direction)
             elif current_room == 3:
                     current_room = move_from_room_3(direction)
-            else: 
-                    reply = "Sorry, which direction was it again?"
-                    await message.channel.send(reply) 
+            # else: 
+            #         reply = "Sorry, which direction was it again?"
+            #         await message.channel.send(reply) 
 
-       # elif contents.startswith("!investigate"):
+        # elif contents.startswith("!investigate"):
+        #     investigate(current_room, direction)
+
             
        # elif:
        #     await message.channel.send("That's dosen't seem quite right. What was I doing again?")

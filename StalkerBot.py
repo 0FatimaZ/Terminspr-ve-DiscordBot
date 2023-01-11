@@ -6,7 +6,6 @@ intents = discord.Intents.default()
 intents.message_content = True
 intents.reactions = True
 intents.members = True
-things = 0
 
 
 client = discord.Client(intents=intents)
@@ -22,17 +21,11 @@ def get_token():
 async def on_ready():
     print("Connected!")
 
-@client.event
-async def on_message(message):
-    contents = message.content
-    user = message.author.id 
 
-@client.event
-async def on_ready():
-    print("Connected!")
 
 
 current_room = 1
+things = 0
 
 
 #Klasser & objekter
@@ -43,6 +36,8 @@ class room:
         
     def show(self):
         return self.name + "description: " + self.surroundings 
+
+#Dictionaries
 
 things_to_find = {
     "note1" : False,
@@ -147,6 +142,12 @@ def look_in_room(current_room):
         return show_room(current_room) 
 
 def dialog_1(choice):
+    print("Something is in the keyhole... what is that?")
+    input()
+    print("...")
+    input()
+    print("AAAGH!")
+    input()
     print("Unknown: 'My... what a pretty being you are.'")
     input()
     print("'Who... who are you?'")
@@ -170,6 +171,18 @@ def dialog_1(choice):
     print("Should I open the door? yes or no?")
     input()
     if choice == "yes":
+        print("'Fine. I'm going to open the door. Step back.'")
+        input()
+        print("'Unknown: 'Thank you gorgeous, you won't regret it.'")
+        input()
+        print("'That's weird, I can't open it.'")
+        input()
+        print("Unknown: 'It must be locked. Do you know where the key is?'")
+        input()
+        print("'Yeah, let me go get it'")
+        input()
+    if choice == "no":
+        print("'I am not opening the door to a stranger.'")
 
 def investigate(current_room, direction):
     if current_room == 0:
@@ -280,7 +293,7 @@ async def on_message(message):
     user = message.author.id
     
     #introduction
-
+    
     if contents.startswith("!quit"):
         await message.channel.send("Are you sure you want to quit? y/n")
         if contents.startswith("!y"):
@@ -315,7 +328,6 @@ async def on_message(message):
             await asyncio.sleep(2)
             await message.channel.send(n) 
     """
-
 
 
 

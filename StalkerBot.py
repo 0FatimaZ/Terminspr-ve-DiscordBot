@@ -86,15 +86,14 @@ def show_room(current_room):
         return room_2.show()
     elif current_room == 3:
         return room_3.show()
-    elif current_room == 4:
-        return room_4.show()
+    
 
 def move_from_room_0(direction):
     if direction == "e": 
         return 1
     elif direction == "s":
-       return "There's a note on the wall!!"
-       things_to_find[note1] == True
+        things_to_find["note1"] == True
+        return "There's a note on the wall.."
     else:
         return 0
 
@@ -103,6 +102,9 @@ def move_from_room_1(direction):
         return 2
     elif direction == "w":  
         return 0
+    elif direction == "e":
+        things_to_find["bed"] == True
+        return "What a comfortable bed."
     else: 
         return 1
     
@@ -113,12 +115,21 @@ def move_from_room_2(direction):
         return 1
     elif direction == "s":
         return 4
+    elif direction == "west":
+        things_to_find["window"] == True
+        return "Why's my window so dirty..."
     else: 
         return 2
 
 def move_from_room_3(direction):
     if direction == "w": 
         return 2
+    elif direction == "s":
+        things_to_find["note2"] == True
+        return "What's that stain... oh wait, there's a sticky note"
+    elif direction == "east":
+        things_to_find["fridge"] == True
+        return "Here's the fridge, am I hungry?"
     else: 
         return 3
 
@@ -135,18 +146,41 @@ def look_in_room(current_room):
         return show_room(current_room) 
 
 #fukntion til dialog
-#def dialoge():
-#   if 
+
+def dialog_1(choice):
+    print("Unknown: 'My... what a pretty being you are.'")
+    input()
+    print("'Who... who are you?'")
+    input()
+    print("Unknown: 'How about you open the door and let me in.'")
+    input()
+    print("'I'm not letting you inside my home. I don't even know you.'")
+    input()
+    print("Unknown: 'But you do know me. If you open the door you could see me.")
+    input()
+    print("I could look at them through the peephole.")
+    input()
+    print("What? Are they covering the peephole? I can't let an unidentified person in my home.")
+    input()
+    print("'Go away. I'm going to call the police.")
+    input()
+    print("Unkown: 'Nonono, no need to act rash my love. I'm sorry if I'm creeping you out. It's just that we haven't seen each other in so long... I miss you.'")
+    input()
+    print("Honestly I'm curious as to who it is.")
+    input()
+    print("Should I open the door? yes or no?")
+    input()
+    if choice == "yes":
 
 def investigate(current_room, direction):
     if current_room == 0:
         if direction == "s":
-            if things_to_find[note1] == True:
-                if investigate_things[hole] == True:
+            if things_to_find["note1"] == True:
+                if investigate_things["hole"] == True:
                     return "How long has that hole been there?"
                     return "I feel like I dont wanna know the answer to that."
                 else: 
-                    investigate_things[hole] == True
+                    investigate_things["hole"] == True
                     things =+ 1
                     return "There's a hole in the wall." 
                     return "I don't dare to look through it."
@@ -160,19 +194,19 @@ def investigate(current_room, direction):
             return "Just a sad empty wall."
     elif current_room == 1:
         if direction == "e":
-            if investigate_things[bed] == True:
-                if things_to_find[glass] == True:
-                    if things_to_find[pen] == True:
+            if investigate_things["bed"] == True:
+                if things_to_find["glass"] == True:
+                    if things_to_find["pen"] == True:
                         return "I can't sleep."
                         return "Not right now."
                         return "Something's..."
                         return "Not right..."
                     else:
-                        things_to_find[pen] == True
+                        things_to_find["pen"] == True
                         return "There's a pen."
                         return "Feels kinda gross, thinking about how long it must've been there."
                 else:
-                    investigate_things[glass] == True
+                    investigate_things["glass"] == True
                     things =+ 1
                     return "There's something under my bed."
                     return "It's a glass filled with yellow liquid and a note that says 'DRINK ME :)'..."
@@ -190,10 +224,10 @@ def investigate(current_room, direction):
         if direction == "n":
             return "The way to my bedroom."
         elif direction == "s":
-            if investigate_things[door] == True:
-                    return dialoge()
+            if investigate_things["door"] == True:
+                    return dialog_1()
             else:
-                investigate_things[door] == True
+                investigate_things["door"] == True
                 return "I take a step closer to my door."
                 return "I'm getting nervous now."
                 return "Something definitely feels off..."
@@ -202,11 +236,11 @@ def investigate(current_room, direction):
                 return "Frozen with fear, I can do nothing but look right back, at the strange eye on the other side."
                 return dialoge()
         elif direction == "e":
-            if investigate_things[window] == True:
-                if things_to_find[eyes] == True:
+            if investigate_things["window"] == True:
+                if things_to_find["eyes"] == True:
                     return "I can still feel the intense stare"
                 else:
-                    things_to_find[eyes] == True
+                    things_to_find["eyes"] == True
                     things =+ 1
                     return "I stare blankly out the window."
                     return "It's dark outside."
@@ -224,25 +258,25 @@ def investigate(current_room, direction):
         if direction == "n":
             return "Nothing but dirty dishes that have been piling up, over the course of the last couple of days."
         elif direction == "s":
-            if things_to_find[note2] == True:
+            if things_to_find["note2"] == True:
                 return "Looking clooser, the wall is stained with the smelly goo."
                 return "When did I last clean this kitchen?"
             else:
-                things_to_find[note2] == True
+                things_to_find["note2"] == True
                 things =+ 1
                 return "I grab the stickynote off the wall."
                 return "It says 'DID YOU LIKE THE MEAL I PREPARED FOR YOU? ^_^'."
                 return "The stickynote is covered in a gooey matter. The smell is indescriptible."
                 return "I feel like throwing up."
-                if things_to_find[guts] == True:
+                if things_to_find["guts"] == True:
                     return "Again."
 
         elif direction == "e":
-            if investigate_things[fridge] == True:
-                if things_to_find[guts] == True:
+            if investigate_things["fridge"] == True:
+                if things_to_find["guts"] == True:
                     return "I'm too scared to look in the fridge again."
                 else:
-                    things_to_find[guts] == True
+                    things_to_find["guts"] == True
                     things =+ 1
                     return "I open the fridge without a second thought, only to be met by the most awful smell imaginable."
                     return "The botton drawer of my fridge is practically drowning in an unidentifiable matter."
@@ -254,6 +288,9 @@ def investigate(current_room, direction):
             return "The way to the livingroom."
         else:
             return "This kitchen is so damn nasty. But it's home."
+
+
+
 
 
 @client.event
@@ -281,12 +318,25 @@ async def on_message(message):
             await message.channel.send(reply)
         elif contents.startswith("!look"):
             look_in_room(current_room)
-       # elif contents.startswith("!walk"):
+        elif contents.startswith("!walk"):
+            if current_room == 0:
+                direction = contents[6:]
+                print(direction)
+                current_room = move_from_room_0(direction)
+            elif current_room == 1:
+                current_room = move_from_room_1(direction)
+            elif current_room == 2:
+                    current_room = move_from_room_2(direction)
+            elif current_room == 3:
+                    current_room = move_from_room_3(direction)
+            else: 
+                    reply = "Sorry, which direction was it again?"
+                    await message.channel.send(reply) 
 
        # elif contents.startswith("!investigate"):
             
-        else:
-            await message.channel.send("That's dosen't seem quite right. What was I doing again?")
+       # elif:
+       #     await message.channel.send("That's dosen't seem quite right. What was I doing again?")
 
 
 

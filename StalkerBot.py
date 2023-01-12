@@ -23,8 +23,8 @@ async def on_ready():
 
 #Dictionaries and lists
 state = {
-    "stage": 3,
-    "current_room": 0,
+    "stage": 0,
+    "current_room": 1,
     "things": 0,
     "dialogue": 0
 }
@@ -35,7 +35,8 @@ things_to_find = {
     "guts" : False,
     "glass" : False,
     "eyes" : False,
-    "pen" : False
+    "pen" : False.
+    "key" : False
 }
 
 walk_over_to = {
@@ -368,10 +369,11 @@ async def on_message(message):
             await message.channel.send("Are you sure you want to quit? y/n")
             await message.channel.send(">>")
             if contents.startswith("!y"):
+                await message.channel.send("Thanks for playing.")
                 Restart
             elif contents.startswith("!n"):
                 await message.channel.send("Good luck.")
-            await message.channel.send(">>")
+                await message.channel.send(">>")
         elif contents.startswith("!help"):
             reply = help
             for n in reply:

@@ -189,73 +189,28 @@ def move_from_room_3(direction):
 
 
 
-def dialogue(choice):
+def dialogue_1(choice):
     if state["dialogue"] == 0:
-        print("Something is in the keyhole... what is that?")
-        input()
-        print("...")
-        input()
-        print("AAAGH!")
-        input()
-        print("Unknown: 'My... what a pretty being you are.'")
-        input()
-        print("'Who... who are you?'")
-        input()
-        print("Unknown: 'How about you open the door and let me in.'")
-        input()
-        print("'I'm not letting you inside my home. I don't even know you.'")
-        input()
-        print("Unknown: 'But you do know me. If you open the door you could see me.'")
-        input()
-        print("I could look at them through the peephole.")
-        input()
-        print("What? Are they covering the peephole? I can't let an unidentified person in my home.")
-        input()
-        print("'Go away. I'm going to call the police.'")
-        input()
-        print("Unkown: 'Nonono, no need to act rash my love. I'm sorry if I'm creeping you out. It's just that we haven't seen each other in so long... I miss you.'")
-        input()
-        print("Honestly I'm curious as to who it is.")
-        input()
-        print("'Tell me your name'")
-        input()
-        print("Unknown: 'You could call me babe, love, soulmate, spou-'")
-        input()
-        print("'NAME. Give me your name.'")
-        input()
-        print("Unknown: 'Well, I do prefer the petnames, but you, my love, can call me Doe'")
-        input()
-        print("Doe? What is this persons last name?")
-        input()
-        print("Doe: 'Open the door, darling. Let me see your lovely face.'")
-        input()
-        print("Should I open the door? yes or no?")
-        input()
-        if choice == "yes":
-            print("'Fine. I'm going to open the door. Step back.'")
-            input()
-            print("Doe: 'Thank you gorgeous, you won't regret it.'")
-            input()
-            print("'That's weird, I can't open it.'")
-            input()
-            print("Doe: 'It must be locked. Do you know where the key is?'")
-            input()
-            print("'Yeah, let me go get it'")
-            input()
-        if choice == "no":
-            print("'I am not opening the door to a stranger.'")
-            input()
-            print("Doe: 'Baby please, don't do that. I would hate to break down the door, but I would just so I could see your beatiful smile.'")
-            input()
-            print("'I am not opening the door to a stranger.'")
-            input()
-            print("Doe: 'Pretty please? As pretty as you?'")
-            input()
-            print("The person behind the door sounds desperate. They don't sound threatening. What is the worst thing that can happen? Afterall I have nothing to lose.")
-            input()
-            print("'Alright, I will open the door. Let me go find the key'")
-            input()
-        state.update({"dialogue": 1})
+        return ["Unknown: 'My... what a pretty being you are.'", "'Who... who are you?'", 
+        "Unknown: 'How about you open the door and let me in.'", "'I'm not letting you inside my home. I don't even know you.'",
+        "Unknown: 'But you do know me. If you open the door you could see me.'", "I could look at them through the peephole.",
+        "What? Are they covering the peephole? I can't let an unidentified person in my home.", "'Go away. I'm going to call the police.'",
+        "Unkown: 'Nonono, no need to act rash my love. I'm sorry if I'm creeping you out. It's just that we haven't seen each other in so long... I miss you.'",
+        "Honestly I'm curious as to who it is.", "'Tell me your name'", "Unknown: 'You could call me babe, love, soulmate, spou-'",
+        "'NAME. Give me your name.'", "Unknown: 'Well, I do prefer the petnames, but you, my love, can call me Doe'", 
+        "Doe? What is this persons last name?", "Doe: 'Open the door, darling. Let me see your lovely face.'", "Should I open the door? yes or no?"]
+        
+    if choice == "yes":
+        return ["'Fine. I'm going to open the door. Step back.'", "Doe: 'Thank you gorgeous, you won't regret it.'", "'That's weird, I can't open it.'",
+        "Doe: 'It must be locked. Do you know where the key is?'", "'Yeah, let me go get it'"]
+           
+    if choice == "no":
+        return ["'I am not opening the door to a stranger.'", "Doe: 'Baby please, don't do that. I would hate to break down the door, but I would just so I could see your beatiful smile.'",
+        "'I am not opening the door to a stranger.'", "Doe: 'Pretty please? As pretty as you?'", 
+        "The person behind the door sounds desperate. They don't sound threatening. What is the worst thing that can happen? Afterall I have nothing to lose.",
+        "'Alright, I will open the door. Let me go find the key'"]
+            
+    state.update({"dialogue": 1})
 
 def dialogue_2(choice):
     if state["dialogue"] == 1:
@@ -421,7 +376,8 @@ def investigate_room_2(direction):
         if direction == "n":
             return ["The way to my bedroom."]
         elif direction == "s":
-            return ["My frontdoor is that way."]
+            if state["dialogue"] == 0:
+                return dialogue_1()
         elif direction == "w":
             return ["My window is that way.", "It's so dark, that the window just looks like a black square from where I'm standing."]
         elif direction == "e":
@@ -549,7 +505,7 @@ async def on_message(message):
                     reply = investigate_room_3(direction)
                 for n in reply:
                     await message.channel.send(n)
-                    await asyncio.sleep(2)
+                    await asyncio.sleep(1)
                 await message.channel.send(">>")
 
 

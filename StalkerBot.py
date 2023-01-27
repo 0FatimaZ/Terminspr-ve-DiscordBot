@@ -188,10 +188,12 @@ def move_from_room_3(direction):
                 return ["I walked over to the fridge."]
 
 
-
-def dialogue_1(choice):
+def dialogue_0():
     if state["dialogue"] == 0:
-        return ["Unknown: 'My... what a pretty being you are.'", "'Who... who are you?'", 
+        return ["I take a step closer to my door.", "I'm getting nervous now.", "Something definitely feels off...", "...", 
+        "I see an eye, peeping right back at me.", "Frozen with fear, I can do nothing but look right back, at the strange eye on the other side."
+        "I move my head to look through the keyhole. I see nothing at first, but as I get used to the darkness...", 
+        "Unknown: 'My... what a pretty being you are.'", "'Who... who are you?'", 
         "Unknown: 'How about you open the door and let me in.'", "'I'm not letting you inside my home. I don't even know you.'",
         "Unknown: 'But you do know me. If you open the door you could see me.'", "I could look at them through the peephole.",
         "What? Are they covering the peephole? I can't let an unidentified person in my home.", "'Go away. I'm going to call the police.'",
@@ -199,20 +201,24 @@ def dialogue_1(choice):
         "Honestly I'm curious as to who it is.", "'Tell me your name'", "Unknown: 'You could call me babe, love, soulmate, spou-'",
         "'NAME. Give me your name.'", "Unknown: 'Well, I do prefer the petnames, but you, my love, can call me Doe'", 
         "Doe? What is this persons last name?", "Doe: 'Open the door, darling. Let me see your lovely face.'", "Should I open the door? yes or no?"]
-        
-    if choice == "yes":
-        return ["'Fine. I'm going to open the door. Step back.'", "Doe: 'Thank you gorgeous, you won't regret it.'", "'That's weird, I can't open it.'",
-        "Doe: 'It must be locked. Do you know where the key is?'", "'Yeah, let me go get it'"]
-           
-    if choice == "no":
-        return ["'I am not opening the door to a stranger.'", "Doe: 'Baby please, don't do that. I would hate to break down the door, but I would just so I could see your beatiful smile.'",
-        "'I am not opening the door to a stranger.'", "Doe: 'Pretty please? As pretty as you?'", 
-        "The person behind the door sounds desperate. They don't sound threatening. What is the worst thing that can happen? Afterall I have nothing to lose.",
-        "'Alright, I will open the door. Let me go find the key'"]
-            
+    
     state.update({"dialogue": 1})
 
-def dialogue_2(choice):
+"""def dialogue_1(choice):
+    if state["dialogue"] == 1:
+        if choice == "yes":
+            return ["'Fine. I'm going to open the door. Step back.'", "Doe: 'Thank you gorgeous, you won't regret it.'", "'That's weird, I can't open it.'",
+            "Doe: 'It must be locked. Do you know where the key is?'", "'Yeah, let me go get it'"]
+            
+        if choice == "no":
+            return ["'I am not opening the door to a stranger.'", "Doe: 'Baby please, don't do that. I would hate to break down the door, but I would just so I could see your beatiful smile.'",
+            "'I am not opening the door to a stranger.'", "Doe: 'Pretty please? As pretty as you?'", 
+            "The person behind the door sounds desperate. They don't sound threatening. What is the worst thing that can happen? Afterall I have nothing to lose.",
+            "'Alright, I will open the door. Let me go find the key'"]
+            
+    state.update({"dialogue": 2})"""
+
+""" def dialogue_2(choice):
     if state["dialogue"] == 1:
         print("'I got the key.'")
         input()
@@ -290,7 +296,7 @@ def dialogue_2(choice):
             print("'ÆA A GH'")
             input()
             print("Ending 2: Police say that the cause of death was a fire, but no body was discovered at the scene, making that just an assumption. There were no eye witnesses and police say that the victim had no close friends and famuily to disclose and ruled it as a suicide instead.")
-        state.update({"dialogue": 1})
+        state.update({"dialogue": 1}) """
 
 def look():
     if state["current_room"] == 0:
@@ -356,10 +362,8 @@ def investigate_room_1(direction):
 def investigate_room_2(direction):
     if walk_over_to["frontdoor"] == True:
         if direction == "s":
-            if state["dialogue"] == 0:
-                return ["I take a step closer to my door.", "I'm getting nervous now.", "Something definitely feels off...", "I move my head to look through the keyhole. I see nothing at first, but as I get used to the darkness...", "...", "I see an eye, peeping right back at me.", "Frozen with fear, I can do nothing but look right back, at the strange eye on the other side.", "*insert dialogue()*"]
-            else:
-                return ["*insert dialogue()*"]
+            """ if state["dialogue"] == 0:
+                return dialogue_1(choice) """
         else:
             return ["I feel like I can hear breathing coming from my frontdoor."]
     elif walk_over_to["window"] == True:
@@ -377,7 +381,7 @@ def investigate_room_2(direction):
             return ["The way to my bedroom."]
         elif direction == "s":
             if state["dialogue"] == 0:
-                return dialogue_1()
+                return ["My front door is blocking the way"]
         elif direction == "w":
             return ["My window is that way.", "It's so dark, that the window just looks like a black square from where I'm standing."]
         elif direction == "e":
@@ -441,7 +445,7 @@ async def on_message(message):
             if contents.startswith("!start game"):
                 reply = ["*While playing, remember that all messages have to start with '!', be in lowercase and spelled correctly.*", "*Also remember, that a reply is expected when '>>' appears*", "Before starting the game, would you like to see a description of the controls? y/n"]
                 for n in reply:
-                    await asyncio.sleep(2)
+                    await asyncio.sleep(1)
                     await message.channel.send(n)
                 await message.channel.send(">>")
                 state.update({"stage": 1})
@@ -466,7 +470,7 @@ async def on_message(message):
             if contents.startswith("!start"):
                 reply = ["*THUD*", "I woke up in cold sweat. Now sitting on my bed, I frantically looked around the room, to see nothing but the same old bedroom in my appartmet.", "What was that?...", "And where did it come from?...", "I can't go back to sleep now.", "I'm too uneasy...", "I should probably investigate and figure out what it was that disturbed my sleep.", "I get out of my bed, almost slipping on a pice of paiper, I make may way to the center of my room.", "Where should I start?" ]
                 for n in reply:
-                    await asyncio.sleep(4)
+                    await asyncio.sleep(1)
                     await message.channel.send(n)
                 await message.channel.send(">>")
                 state.update({"stage": 3})
@@ -490,7 +494,7 @@ async def on_message(message):
                     reply = move_from_room_3(direction)
                 for n in reply:
                     await message.channel.send(n)
-                    await asyncio.sleep(2)
+                    await asyncio.sleep(1)
                 await message.channel.send(">>")
 
             elif contents.startswith("!investigate"):
@@ -501,6 +505,21 @@ async def on_message(message):
                     reply = investigate_room_1(direction)
                 elif state["current_room"] == 2:
                     reply = investigate_room_2(direction)
+                    if direction == "s":
+                        #choice = contents[6:]
+                        if state["dialogue"] == 0:
+                            reply = dialogue_0()
+                            if contents.startswith("!y"):
+                                reply = ["'Fine. I'm going to open the door. Step back.'", "Doe: 'Thank you gorgeous, you won't regret it.'", "'That's weird, I can't open it.'",
+                                "Doe: 'It must be locked. Do you know where the key is?'", "'Yeah, let me go get it'"]
+                            elif contents.startswith("!n"):
+                                reply = ["'I am not opening the door to a stranger.'", "Doe: 'Baby please, don't do that. I would hate to break down the door, but I would just so I could see your beatiful smile.'",
+                                "'I am not opening the door to a stranger.'", "Doe: 'Pretty please? As pretty as you?'", 
+                                "The person behind the door sounds desperate. They don't sound threatening. What is the worst thing that can happen? Afterall I have nothing to lose.",
+                                "'Alright, I will open the door. Let me go find the key'"]
+                            
+                            state.update({"dialogue": 1})
+                            
                 elif state["current_room"] == 3:
                     reply = investigate_room_3(direction)
                 for n in reply:

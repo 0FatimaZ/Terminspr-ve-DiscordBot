@@ -322,15 +322,17 @@ def investigate_room_0(direction):
             things_to_find.update({"note1": True})
             return ["There's a note on the wall...", "It says 'YOU ALWAYS LOOK SO LOVELY DARLING <3'.", "...", "I definitely don't know anyone who would write such things about me.", "I crumple up the note and throw it in the toilet.", "What a joke..."]
     elif direction == "n":
-        return ["Nothing but my own tired reflection."]
+        return ["Nothing but my own tired reflection and a note that says 'Remember to take your remember pills'.", "What pills.", "I don't rememb-", "Nevermind."]
     elif direction == "e":
         return ["The way to my bedroom."]
+    elif direction == "w"
+        return ["Just my toilet."]
+        if state["dialogue"] == 1:
+            if things_to_find["key"] == False:
+                things_to_find.update({"key": True})
+                return ["...", "What the-", "Is that my key?", "Urhg... I must have dropped it down there.", "So gross.", "I pick up the key, and wash it and my hands in the sink.", "Why didn't I pick it up when I dropped it... urgh."]
     else:
         return ["Theres nothing special or noticable in that direction."]
-
-
-
-
 
 def investigate_room_1(direction):
     if walk_over_to["bed"] == True:

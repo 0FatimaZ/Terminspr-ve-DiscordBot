@@ -221,17 +221,17 @@ def dialogue_1():
         "Should I open the door? yes or no?"]
 
 def dialogue_2(choice):   
-    if choice == "y":
+    if choice == "y" and "yes":
         return ["'Promise not to do anything bad to me?'", "Doe: 'Darling, I just want your heart'", "'Awww. What is there to lose anyway?'", 
         "*Click turn click*", "'Wow, I didn't expect you to be this tall.'", "'Wait... what is that?'", "'Why are you looking at me like that?'",
         "*THUD*", "'Ehhh, where am I?'", "Doe: 'Oh, you're awake? You're home.'", "'This isn't my home.'", "Doe: 'It is now. I couldn't let the love of my life live in that awful place.'",
         "'Let me go, please?'", "Doe: 'Now why would I ever want to do that? We are going to live happily ever after.'", "Ending 1: Doe loved you too much."]
         
-    elif choice == "n":
+    elif choice == "n" and "no":
         return ["'I am not opening the door to a stranger.'", "Doe: 'Are you that mentally inslaved and stupid?! Open the door, now. I can't keep forgiving you like this.'", 
         "'Forgive me? I didn't do anything wrong. You are in the wrong. You are a stalker.'", "Doe: '...'", "Doe: 'Take it back.'", "'No'", "Doe: 'TÆ K3 l t  B 4 C'", "*THUD*",
         "*THUD*", "Doe: 'There you are...'", "'ÆA A GH'", 
-        "Ending 2: Police say that the cause of death was a fire, but no body was discovered at the scene, making that just an assumption. There were no eye witnesses and police say that the victim had no close friends and famuily to disclose and ruled it as a suicide instead."]
+        "Ending 2: Police say that the cause of death was a fire, but no body was discovered at the scene, making that just an assumption. There were no eye witnesses and police say that the victim had no close friends and family to disclose and ruled it as a suicide instead."]
     
     elif choice == "pen" and things_to_find["pen"] == True:
         return ["My pen!", "'Fine... I'll open the door.'", "Doe: 'There it is. I just love your logical thinking.'", "I don't think you'll like it in a second", "Where is my pen?", 

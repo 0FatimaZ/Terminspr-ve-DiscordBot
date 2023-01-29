@@ -1,5 +1,4 @@
 from pdb import Restart
-from PIL import Image
 import discord
 import asyncio
 
@@ -387,7 +386,7 @@ async def on_message(message):
             reply = help
             for n in reply:
                 await message.channel.send(n)
-            await message.channel.send(file=discord.File('mapp.PNG'))
+            await message.channel.send("Here's your map", file=discord.File('mapp.PNG'))
             await message.channel.send(">>")
 
         elif state["stage"] == 0:

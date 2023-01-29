@@ -1,4 +1,5 @@
 from pdb import Restart
+from PIL import Image
 import discord
 import asyncio
 
@@ -53,12 +54,12 @@ investigateable = {
 room = {
     "room_0" : ["*The bathroom*",
     "Just an ordinary bathroom", 
-    "Althoug my mirror could use bit of a a wipe down.",
+    "Althoug my mirror could use a bit of  a wipe down.",
     "Maybe the walls too..."],
         
     "room_1" : ["*The bedroom*",
     "It's rather empty in here. No pictures on the walls or any form of decoration.",
-    "Just my bed, some clothes and tash here and there, scattered arround on the room."],
+    "Just my bed, some clothes and trash here and there, scattered arround on the room."],
 
     "room_2" : ["*The livingroom*", 
     "My living room is so empty and lifeless.", 
@@ -75,11 +76,11 @@ room = {
 help = ["!look gives you a short description of the room that you are currently in. ", 
 "-",  
 "!walk lets you walk in either north, west, east or south from the room that you are in. ", 
-"To choose direction, after typing !walk then type either n, w, e or s, and then send your message. ", 
+"To choose direction, after typing !walk then type either n, w, e or s, and then send your message. ", "Eg. !walk s, for walking south", 
 "-", 
-"!investigate lets you further investigate whatever is in your choosen direction. ", 
-"Like !walk, to choose direction, type either n, w, e or s after typing the control. ", 
-"Remeber that you may have to walk clooser to whatever it is you want to investigate, before you can investigate it. ", 
+"!in lets you further investigate whatever is in your choosen direction. ", 
+"Like !walk, to choose direction, type either n, w, e or s.", "Eg. !in w to invesitgate in the western direction", 
+"Remeber that you may have to walk closer to whatever it is you want to investigate, before you can investigate it. ", 
 "-", 
 "!quit allows you to exit the game at any time. ", 
 "-"]
@@ -98,7 +99,7 @@ def move_from_room_0(direction):
             else:
                 return ["Wait...", "There was something behind the note..."]
         else:
-            return ["Just my shower.", "Nothing noticeably weird.", "Wait...", "Now that I'm actually looking.", "Thres something stuck on the wall..."]
+            return ["Just my shower.", "Nothing noticeably weird.", "Wait...", "Now that I'm actually looking.", "Theres something stuck on the wall..."]
     elif direction == "n":
         return ["Just my dirty mirror that way."]
     elif direction == "w":
@@ -129,7 +130,7 @@ def move_from_room_1(direction):
 def move_from_room_2(direction):
     if walk_over_to["frontdoor"] == True:
         if direction == "s":
-            return ["I can't leave right now.", "For multible reasons..."]
+            return ["I can't leave right now.", "For multiple reasons..."]
         else:
             walk_over_to.update({"frontdoor": False})
             return ["I stepped away from the frontdoor."]
@@ -160,7 +161,7 @@ def move_from_room_3(direction):
     if walk_over_to["fridge"] == True:
         if direction == "e":
             if things_to_find["guts"] == True:
-                return ["I think I'm gonna throw up again, if I say around this fridge much longer."]
+                return ["I think I'm gonna throw up again, if I stay around this fridge much longer."]
             else:
                 return ["Maybe I should gab a snack."]
         else:
@@ -181,7 +182,7 @@ def move_from_room_3(direction):
                     reply.append ("Again.")
                 return (reply)
             else:
-                return ["Overe theres is the wall where that creepy note was."]
+                return ["That's the wall where that creepy note was."]
         elif direction == "e":
             if things_to_find["guts"] == True:
                 return ["I can't get myself to go near the fridge again.", "At least not for the time being."]
@@ -275,7 +276,7 @@ def investigate_room_0(direction):
         if state["dialogue"] == 1:
             if things_to_find["key"] == False:
                 things_to_find.update({"key": True})
-                return ["...", "What the-", "Is that my key?", "Urhg... I must have dropped it down there.", "So gross.", "I pick up the key, and wash it and my hands in the sink.", "Why didn't I pick it up when I dropped it... urgh."]
+                return ["...", "What the-", "Is that my key?", "Urhg... I must have dropped it down there.", "So gross.", "I pick up the key, and wash it and my hands in the sink.", "Why didn't I pick it up when I dropped it... urgh.", "Anyway, I've got the key now."]
         else:
             return ["Just my toilet."]
     else:
@@ -289,7 +290,7 @@ def investigate_room_1(direction):
                         return ["I can't sleep.", "Not right now.", "Something's...", "Not right..."]
                     else:
                         things_to_find.update({"pen": True})
-                        return ["There's a pen.", "Feels kinda gross, thinking about how long it must've been there."]
+                        return ["There's a pen.", "Feels kinda gross, thinking about how long it must've been there.", "At least I've got it now"]
             else:
                 things_to_find.update({"glass": True})
                 state["things"] += 1
@@ -344,7 +345,7 @@ def investigate_room_3(direction):
             else:
                 things_to_find.update({"guts": True})
                 state["things"] += 1
-                return ["I open the fridge without a second thought, only to be met by the most awful smell imaginable.", "The botton drawer of my fridge is practically drowning in an unidentifiable matter.", "The only word I can think of to describe what I am seeing, is grusome...", "I threw up in the trash.", "I feel awful."]
+                return ["I open the fridge without a second thought, only to be met by the most awful smell imaginable.", "The botton drawer of my fridge is practically drowning in an unidentifiable matter.", "The only word I can think of to describe what I am seeing, is gruesome...", "I threw up in the trash.", "I feel awful."]
         else:
             if things_to_find["guts"] == True:
                 return ["The murky goo is seeping from my fridge.", "Covering the floor in the questionable fluid."]
@@ -386,6 +387,7 @@ async def on_message(message):
             reply = help
             for n in reply:
                 await message.channel.send(n)
+            await message.channel.send(file=discord.File('mapp.PNG'))
             await message.channel.send(">>")
 
         elif state["stage"] == 0:

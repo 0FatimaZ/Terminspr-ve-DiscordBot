@@ -21,7 +21,7 @@ async def on_ready():
     print("Connected!")
 
 
-#Dictionaries and lists
+#Dictionaries 
 state = {
     "stage": 0,
     "current_room": 1,
@@ -72,6 +72,8 @@ room = {
     "It hurts just thinking about my electrical bill."]
 }
 
+
+# List 
 help = ["!look gives you a short description of the room that you are currently in. ", 
 "-",  
 "!walk lets you walk in either north, west, east or south from the room that you are in. ", 
@@ -86,7 +88,7 @@ help = ["!look gives you a short description of the room that you are currently 
 
 
 
-#Modules
+# Movement funktioner
 def move_from_room_0(direction):
     if direction == "e": 
         state.update({"current_room": 1})
@@ -154,8 +156,6 @@ def move_from_room_2(direction):
             return ["I went over to my window."]
     
             
-
-
 def move_from_room_3(direction):
     if walk_over_to["fridge"] == True:
         if direction == "e":
@@ -190,8 +190,7 @@ def move_from_room_3(direction):
                 return ["I walked over to the fridge."]
     
     
-
-
+# Dialogues
 def dialogue_0():
     if state["dialogue"] == 0:
         return ["I take a step closer to my door.", "I'm getting nervous now.", "Something definitely feels off...", "...", 
@@ -242,6 +241,8 @@ def dialogue_2(choice):
     else:
         return ["Do I want to open the door?"]  
 
+
+# Look funktion
 def look():
     if state["current_room"] == 0:
         return room["room_0"]
@@ -254,7 +255,7 @@ def look():
     elif state["current_room"] == 3:
         return room["room_3"]
 
-
+# Investigate funktioner
 def investigate_room_0(direction):
     if direction == "s":
         if things_to_find["note1"] == True:
@@ -382,6 +383,7 @@ async def on_message(message):
             elif contents.startswith("!n"):
                 await message.channel.send("Good luck.")
                 await message.channel.send(">>")
+
         elif contents.startswith("!help"):
             reply = help
             for n in reply:

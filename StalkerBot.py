@@ -53,23 +53,20 @@ investigateable = {
 room = {
     "room_0" : ["*The bathroom*",
     "Just an ordinary bathroom", 
-    "Althoug my mirror could use a bit of  a wipe down.",
-    "Maybe the walls too..."],
+    "Althoug my mirror could use a bit of  a wipe down.",],
         
     "room_1" : ["*The bedroom*",
-    "It's rather empty in here. No pictures on the walls or any form of decoration.",
+    "It's rather empty in here",
     "Just my bed, some clothes and trash here and there, scattered arround on the room."],
 
     "room_2" : ["*The livingroom*", 
-    "My living room is so empty and lifeless.", 
-    "Feels more like a 'dying'-room if you ask me.",
-    "From here on I can leave my appartmet.",
-    "Whether that be by using the frontdoor up ahead, or by jumping out the window."],
+    "My living room is so empty and lifeless.",
+    "From here on I can leave my apartment.",
+    "Gotta search for the frontdoor key first."],
 
     "room_3" : ["*The kitchen*",
     "My kitchen could be in better condition.",
-    "Damn, looks like I left the fridge open.",
-    "It hurts just thinking about my electrical bill."]
+    "Damn, looks like I left the fridge open.",]
 }
 
 
@@ -77,11 +74,10 @@ room = {
 help = ["!look gives you a short description of the room that you are currently in. ", 
 "-",  
 "!walk lets you walk in either north, west, east or south from the room that you are in. ", 
-"To choose direction, after typing !walk then type either n, w, e or s, and then send your message. ", "Eg. !walk s, for walking south", 
+"To choose direction, type either n, w, e or s after typing !walk then send your message. ", "Eg. !walk s, for walking south", 
 "-", 
 "!in lets you further investigate whatever is in your choosen direction. ", 
 "Like !walk, to choose direction, type either n, w, e or s.", "Eg. !in w to invesitgate in the western direction", 
-"Remeber that you may have to walk closer to whatever it is you want to investigate, before you can investigate it. ", 
 "-", 
 "!quit allows you to exit the game at any time. ", 
 "-"]
@@ -100,7 +96,7 @@ def move_from_room_0(direction):
             else:
                 return ["Wait...", "There was something behind the note..."]
         else:
-            return ["Just my shower.", "Nothing noticeably weird.", "Wait...", "Now that I'm actually looking.", "Theres something stuck on the wall..."]
+            return ["Just my shower.", "Nothing noticeably weird.", "Wait...", "Theres something stuck on the wall..."]
     elif direction == "n":
         return ["Just my dirty mirror that way."]
     elif direction == "w":
@@ -162,7 +158,7 @@ def move_from_room_3(direction):
             if things_to_find["guts"] == True:
                 return ["I think I'm gonna throw up again, if I stay around this fridge much longer."]
             else:
-                return ["Maybe I should gab a snack."]
+                return ["Maybe I should grab a snack."]
         else:
             walk_over_to.update({"fridge": False})
             if things_to_find["guts"] == True:
@@ -176,7 +172,7 @@ def move_from_room_3(direction):
         elif direction == "s":
             if things_to_find["note2"] == False:
                 things_to_find.update({"note2": True})
-                reply = ["What's that stain?...", "Hold up...", "Is that a stickynote?", "I grab the stickynote off the wall.", "It says 'DID YOU LIKE THE MEAL I PREPARED FOR YOU? ^_^'.", "The stickynote is covered in a gooey matter. The smell is indescriptible.", "I feel like throwing up."]
+                reply = ["What's that stain?...", "Is that a stickynote?", "I grab the stickynote off the wall.", "It says 'DID YOU LIKE THE MEAL I PREPARED FOR YOU? ^_^'.", "The stickynote is covered in a gooey matter. The smell is indescriptible.", "I feel like throwing up."]
                 if things_to_find["guts"] == True:
                     reply.append ("Again.")
                 return (reply)
@@ -260,14 +256,14 @@ def investigate_room_0(direction):
     if direction == "s":
         if things_to_find["note1"] == True:
             if investigateable["wall_with_hole"] == True:
-                return ["How long has that hole been there?", "I don't think I want to know the answer to that."]
+                return ["How long has that hole been there?"]
             else: 
                 investigateable.update({"wall_with_hole": True})
                 state["things"] += 1
-                return ["There's a hole in the wall...", "Next to my shower...", "No- I'm not gonna think about it.", "This building is old...", "...", "Ofcouse there'll be some imperfections..."]
+                return ["There's a hole in the wall...", "Next to my shower...", "This building is old...", "...", "Of course there'll be some imperfections..."]
         else:
             things_to_find.update({"note1": True})
-            return ["There's a note on the wall...", "It says 'YOU ALWAYS LOOK SO LOVELY DARLING <3'.", "...", "I definitely don't know anyone who would write such things about me.", "I crumple up the note and throw it in the toilet.", "What a joke..."]
+            return ["There's a note on the wall...", "It says 'YOU ALWAYS LOOK SO LOVELY DARLING <3'.", "...", "I definitely don't know anyone who would write such things about me.", "I crumple up the note and throw it in the toilet.", "How creepy."]
     elif direction == "n":
         return ["Nothing but my own tired reflection and a note that says 'Remember to take your remember pills'.", "What pills.", "I don't rememb-", "Nevermind."]
     elif direction == "e":
@@ -276,7 +272,7 @@ def investigate_room_0(direction):
         if state["dialogue"] == 1:
             if things_to_find["key"] == False:
                 things_to_find.update({"key": True})
-                return ["...", "What the-", "Is that my key?", "Urhg... I must have dropped it down there.", "So gross.", "I pick up the key, and wash it and my hands in the sink.", "Why didn't I pick it up when I dropped it... urgh.", "Anyway, I've got the key now."]
+                return ["...", "What the-", "Is that my key?", "Urhg... I must have dropped it down there.", "I pick up the key, and wash it and my hands in the sink.", "Anyway, I've got the key now."]
         else:
             return ["Just my toilet."]
     else:
@@ -296,7 +292,7 @@ def investigate_room_1(direction):
                 state["things"] += 1
                 return ["There's something under my bed.", "It's a glass filled with yellow liquid and a note that says 'DRINK ME :)'...", "I better not."]
         else:
-            return ["It's rather messy around my bed.", "Lots of trash and dirty clothes.", "It's probably a lot worse under my bed."]
+            return ["It's rather messy around my bed.", "It's probably a lot worse under my bed."]
     else:
         if direction == "e":
             if walk_over_to["bed"] == True:
@@ -323,9 +319,9 @@ def investigate_room_2(direction):
             else:
                 things_to_find.update({"eyes": True})
                 state["things"] += 1
-                return ["I stare blankly out the window.", "It's dark outside.", "The longer I stare, the more I feel like I can see two creepy eyes watching me.", "Observing my every move."]
+                return ["I stare blankly out the window.", "It's dark outside.", "The longer I stare, the more I feel like I can see two creepy eyes watching me."]
         else:
-            return ["I can hear a slight tapping...", "which I am guessing is just the wind knocking a branch against my window."]
+            return ["I can hear a slight tapping...", "which I am guessing is just a branch knocking against my window."]
     else:
         if direction == "n":
             return ["The way to my bedroom."]
@@ -345,7 +341,7 @@ def investigate_room_3(direction):
             else:
                 things_to_find.update({"guts": True})
                 state["things"] += 1
-                return ["I open the fridge without a second thought, only to be met by the most awful smell imaginable.", "The botton drawer of my fridge is practically drowning in an unidentifiable matter.", "The only word I can think of to describe what I am seeing, is gruesome...", "I threw up in the trash.", "I feel awful."]
+                return ["I open the fridge without a second thought, only to be met by the most awful smell imaginable.", "The botton drawer of my fridge is practically drowning in an unidentifiable matter.", "The only word I can think of to describe what I am seeing, is gruesome...", "I threw up in the trash."]
         else:
             if things_to_find["guts"] == True:
                 return ["The murky goo is seeping from my fridge.", "Covering the floor in the questionable fluid."]
@@ -353,10 +349,10 @@ def investigate_room_3(direction):
                 return ["Apperently I didn't completely close my fridgedoor.", "Weird. I'm normally so cautious about things like that."]
     else:
         if direction == "n":
-            return ["Nothing but dirty dishes that have been piling up, over the course of the last couple of days."]
+            return ["Nothing but dirty dishes that have been piling up"]
         elif direction == "s":
             if things_to_find["note2"] == True:
-                return ["Looking clooser, the wall is stained with the smelly goo.", "When did I last clean this kitchen?"]
+                return ["Looking closer, the wall is stained with the smelly goo.", "When did I last clean this kitchen?"]
             else:
                 return ["I think there's something stuck to the wall..."]
         elif direction == "e":
@@ -396,7 +392,7 @@ async def on_message(message):
                 reply = ["*While playing, remember that all messages have to start with '!', be in lowercase and spelled correctly.*", "*Also remember, that a reply is expected when '>>' appears*", "Before starting the game, would you like to see a description of the controls? y/n"]
                 await message.channel.send("Here's your map", file=discord.File('mapp.PNG'))
                 for n in reply:
-                    await asyncio.sleep(1)
+                    await asyncio.sleep(3)
                     await message.channel.send(n)
                 await message.channel.send(">>")
                 state.update({"stage": 1})
@@ -408,11 +404,11 @@ async def on_message(message):
                 for n in reply:
                     await message.channel.send(n)
                     state.update({"stage": 2})
-                await message.channel.send("If you want to see the control discriptions again, then you can simply at any point in the game, type !help.")
+                await message.channel.send("If you want to see the control descriptions again, then you can simply at any point in the game, type !help.")
                 await message.channel.send("To start the game type !start")
                 await message.channel.send(">>")
             elif contents.startswith("!n"):
-                await message.channel.send("If you want to see the control discriptions, then you can simply at any point in the game, type !help.")
+                await message.channel.send("If you want to see the control descriptions, then you can simply at any point in the game, type !help.")
                 await message.channel.send("To start the game type !start.")
                 await message.channel.send(">>")
                 state.update({"stage": 2})
@@ -421,7 +417,7 @@ async def on_message(message):
             if contents.startswith("!start"):
                 reply = ["*THUD*", "I woke up in cold sweat. Now sitting on my bed, I frantically looked around the room, to see nothing but the same old bedroom in my appartmet.", "What was that?...", "And where did it come from?...", "I can't go back to sleep now.", "I'm too uneasy...", "I should probably investigate and figure out what it was that disturbed my sleep.", "I get out of my bed, almost slipping on a pice of paiper, I make may way to the center of my room.", "Where should I start?" ]
                 for n in reply:
-                    await asyncio.sleep(1)
+                    await asyncio.sleep(4)
                     await message.channel.send(n)
                 await message.channel.send(">>")
                 state.update({"stage": 3})
@@ -445,7 +441,7 @@ async def on_message(message):
                     reply = move_from_room_3(direction)
                 for n in reply:
                     await message.channel.send(n)
-                    await asyncio.sleep(1)
+                    await asyncio.sleep(3)
                 await message.channel.send(">>")
 
             elif contents.startswith("!in"):
@@ -467,7 +463,7 @@ async def on_message(message):
                     reply = investigate_room_3(direction)
                 for n in reply:
                     await message.channel.send(n)
-                    await asyncio.sleep(1)
+                    await asyncio.sleep(3)
                 await message.channel.send(">>")
         
         elif state["stage"] == 4:

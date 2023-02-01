@@ -394,6 +394,7 @@ async def on_message(message):
         elif state["stage"] == 0:
             if contents.startswith("!start game"):
                 reply = ["*While playing, remember that all messages have to start with '!', be in lowercase and spelled correctly.*", "*Also remember, that a reply is expected when '>>' appears*", "Before starting the game, would you like to see a description of the controls? y/n"]
+                await message.channel.send("Here's your map", file=discord.File('mapp.PNG'))
                 for n in reply:
                     await asyncio.sleep(1)
                     await message.channel.send(n)
@@ -408,7 +409,7 @@ async def on_message(message):
                     await message.channel.send(n)
                     state.update({"stage": 2})
                 await message.channel.send("If you want to see the control discriptions again, then you can simply at any point in the game, type !help.")
-                await message.channel.send("To start the game type !start.")
+                await message.channel.send("To start the game type !start")
                 await message.channel.send(">>")
             elif contents.startswith("!n"):
                 await message.channel.send("If you want to see the control discriptions, then you can simply at any point in the game, type !help.")
@@ -447,8 +448,8 @@ async def on_message(message):
                     await asyncio.sleep(1)
                 await message.channel.send(">>")
 
-            elif contents.startswith("!investigate"):
-                direction = contents[13:]
+            elif contents.startswith("!in"):
+                direction = contents[4:]
                 if state["current_room"] == 0:
                     reply = investigate_room_0(direction)
                 elif state["current_room"] == 1:

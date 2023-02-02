@@ -25,8 +25,8 @@ async def on_ready():
 state = {
     "stage": 0,
     "current_room": 1,
-    "things": 0,
-    "dialogue": 0
+    "dialogue": 0,
+    "user": None
 }
 
 things_to_find = {
@@ -220,20 +220,21 @@ def dialogue_2(choice):
         return ["'Promise not to do anything bad to me?'", "Doe: 'Darling, I just want your heart'", "'Awww. What is there to lose anyway?'", 
         "*Click turn click*", "'Wow, I didn't expect you to be this tall.'", "'Wait... what is that?'", "'Why are you looking at me like that?'",
         "*THUD*", "'Ehhh, where am I?'", "Doe: 'Oh, you're awake? You're home.'", "'This isn't my home.'", "Doe: 'It is now. I couldn't let the love of my life live in that awful place.'",
-        "'Let me go, please?'", "Doe: 'Now why would I ever want to do that? We are going to live happily ever after.'", "Ending 1: Doe loved you too much."]
+        "'Let me go, please?'", "Doe: 'Now why would I ever want to do that? We are going to live happily ever after.'", "Ending 1: Doe loved you too much.", "Thanks for playing."]
         
     elif choice == "n" and "no":
         return ["'I am not opening the door to a stranger.'", "Doe: 'Are you that mentally inslaved and stupid?! Open the door, now. I can't keep forgiving you like this.'", 
         "'Forgive me? I didn't do anything wrong. You are in the wrong. You are a stalker.'", "Doe: '...'", "Doe: 'Take it back.'", "'No'", "Doe: 'TÆ K3 l t  B 4 C'", "*THUD*",
         "*THUD*", "Doe: 'There you are...'", "'ÆA A GH'", 
-        "Ending 2: Police say that the cause of death was a fire, but no body was discovered at the scene, making that just an assumption. There were no eye witnesses and police say that the victim had no close friends and family to disclose and ruled it as a suicide instead."]
+        "Ending 2: Police say that the cause of death was a fire, but no body was discovered at the scene, making that just an assumption. There were no eye witnesses and police say that the victim had no close friends and family to disclose and ruled it as a suicide instead.",
+        "Thanks for playing."]
     
     elif choice == "pen" and things_to_find["pen"] == True:
         return ["My pen!", "'Fine... I'll open the door.'", "Doe: 'There it is. I just love your logical thinking.'", "I don't think you'll like it in a second", "Where is my pen?", 
         "Ah, there it is.", "Doe: 'Darling, you are taking an awfully long time. I am so eager to see you.'", "'Take this you piece of shit'", 
         "Doe: 'AAAGHHH, YOU LITTLE... DO YOU HAVE ANY IDEA WHAT YOU HAVE DONE?! CALL AN AMBULANCE. NOW!'", "'No, I won't.'", 
         "Doe: 'What kind of psycho stabs someone in the eye through a keyhole?!'", "Doe: 'You know what? You're ugly anyway. Why did I ever waste a second on you, you are going to die alone.'",
-        "Honestly I'd rather die than be with that stalker!", "'Bye Doe'", "Doe: 'This isn't over. I'm getting my revenge someday.'", "Ending 3: Safe again."]
+        "Honestly I'd rather die than be with that stalker!", "'Bye Doe'", "Doe: 'This isn't over. I'm getting my revenge someday.'", "Ending 3: Safe again.", "Thanks for playing."]
     else:
         return ["Do I want to open the door?"]  
 
@@ -259,7 +260,6 @@ def investigate_room_0(direction):
                 return ["How long has that hole been there?"]
             else: 
                 investigateable.update({"wall_with_hole": True})
-                state["things"] += 1
                 return ["There's a hole in the wall...", "Next to my shower...", "This building is old...", "...", "Of course there'll be some imperfections..."]
         else:
             things_to_find.update({"note1": True})
@@ -289,7 +289,6 @@ def investigate_room_1(direction):
                         return ["There's a pen.", "Feels kinda gross, thinking about how long it must've been there.", "At least I've got it now"]
             else:
                 things_to_find.update({"glass": True})
-                state["things"] += 1
                 return ["There's something under my bed.", "It's a glass filled with yellow liquid and a note that says 'DRINK ME :)'...", "I better not."]
         else:
             return ["It's rather messy around my bed.", "It's probably a lot worse under my bed."]
@@ -318,7 +317,6 @@ def investigate_room_2(direction):
                 return ["I can still feel the intense stare."]
             else:
                 things_to_find.update({"eyes": True})
-                state["things"] += 1
                 return ["I stare blankly out the window.", "It's dark outside.", "The longer I stare, the more I feel like I can see two creepy eyes watching me."]
         else:
             return ["I can hear a slight tapping...", "which I am guessing is just a branch knocking against my window."]
@@ -340,7 +338,6 @@ def investigate_room_3(direction):
                 return ["The smell of the goo and my vomit is mixing in the air."]
             else:
                 things_to_find.update({"guts": True})
-                state["things"] += 1
                 return ["I open the fridge without a second thought, only to be met by the most awful smell imaginable.", "The botton drawer of my fridge is practically drowning in an unidentifiable matter.", "The only word I can think of to describe what I am seeing, is gruesome...", "I threw up in the trash."]
         else:
             if things_to_find["guts"] == True:
@@ -366,19 +363,12 @@ def investigate_room_3(direction):
 async def on_message(message):
     global run_game
     contents = message.content
-    user = message.author.id
     
     if not (message.author.bot):
 
         if contents.startswith("!quit"):
-            await message.channel.send("Are you sure you want to quit? y/n")
-            await message.channel.send(">>")
-            if contents.startswith("!y"):
-                await message.channel.send("Thanks for playing.")
-                Restart
-            elif contents.startswith("!n"):
-                await message.channel.send("Good luck.")
-                await message.channel.send(">>")
+            await message.channel.send("Thanks for playing.")
+            state.update({"stage": 0})
 
         elif contents.startswith("!help"):
             reply = help
@@ -389,15 +379,16 @@ async def on_message(message):
 
         elif state["stage"] == 0:
             if contents.startswith("!start game"):
+                state["user"] = message.author.id
                 reply = ["*While playing, remember that all messages have to start with '!', be in lowercase and spelled correctly.*", "*Also remember, that a reply is expected when '>>' appears*", "Before starting the game, would you like to see a description of the controls? y/n"]
                 await message.channel.send("Here's your map", file=discord.File('mapp.PNG'))
                 for n in reply:
-                    await asyncio.sleep(3)
+                    await asyncio.sleep(2)
                     await message.channel.send(n)
                 await message.channel.send(">>")
                 state.update({"stage": 1})
 
-        elif state["stage"] == 1:
+        elif state["user"] == message.author.id and state["stage"] == 1:
             if contents.startswith("!y"):
                 await message.channel.send("While playing the game you will be able to use the following controls: ")
                 reply = help
@@ -413,16 +404,16 @@ async def on_message(message):
                 await message.channel.send(">>")
                 state.update({"stage": 2})
         
-        elif state["stage"] == 2:
+        elif state["user"] == message.author.id and state["stage"] == 2:
             if contents.startswith("!start"):
-                reply = ["*THUD*", "I woke up in cold sweat. Now sitting on my bed, I frantically looked around the room, to see nothing but the same old bedroom in my appartmet.", "What was that?...", "And where did it come from?...", "I can't go back to sleep now.", "I'm too uneasy...", "I should probably investigate and figure out what it was that disturbed my sleep.", "I get out of my bed, almost slipping on a pice of paiper, I make may way to the center of my room.", "Where should I start?" ]
+                reply = ["*THUD*", "I woke up in cold sweat. Now sitting on my bed, I frantically looked around the room, to see nothing but the same old bedroom in my appartmet.", "What was that?...", "And where did it come from?...", "I can't go back to sleep now.", "I'm too uneasy...", "I should probably investigate and figure out what it was that disturbed my sleep.", "I get out of my bed, almost slipping on a piece of paper, I make may way to the center of my room.", "Where should I start?" ]
                 for n in reply:
-                    await asyncio.sleep(4)
+                    await asyncio.sleep(2)
                     await message.channel.send(n)
                 await message.channel.send(">>")
                 state.update({"stage": 3})
 
-        elif state["stage"] == 3:
+        elif state["user"] == message.author.id and state["stage"] == 3:
             if contents.startswith("!look"):
                 reply = look()
                 for n in reply:
@@ -441,7 +432,7 @@ async def on_message(message):
                     reply = move_from_room_3(direction)
                 for n in reply:
                     await message.channel.send(n)
-                    await asyncio.sleep(3)
+                    await asyncio.sleep(2)
                 await message.channel.send(">>")
 
             elif contents.startswith("!in"):
@@ -463,22 +454,22 @@ async def on_message(message):
                     reply = investigate_room_3(direction)
                 for n in reply:
                     await message.channel.send(n)
-                    await asyncio.sleep(3)
+                    await asyncio.sleep(2)
                 await message.channel.send(">>")
+            
+            else:
+                await message.channel.send("What should I do?")
         
-        elif state["stage"] == 4:
+        elif state["user"] == message.author.id and state["stage"] == 4:
             if contents.startswith("!"):
                 choice = contents[1:]
                 reply = dialogue_2(choice)
-                state.update({"stage": 5})
+                state.update({"stage": 0})
             for n in reply:
                     await message.channel.send(n)
-                    await asyncio.sleep(1)
-            await message.channel.send(">>")
+                    await asyncio.sleep(2)
         
-        elif state["stage"] == 5:
-            await message.channel.send("Thanks for playing.")
-            Restart
+            
 
         
 

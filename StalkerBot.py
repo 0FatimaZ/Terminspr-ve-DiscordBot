@@ -21,7 +21,7 @@ async def on_ready():
     print("Connected!")
 
 
-#Dictionaries 
+# Dictionaries 
 state = {
     "stage": 0,
     "current_room": 1,
@@ -84,7 +84,7 @@ help = ["!look gives you a short description of the room that you are currently 
 
 
 
-# Movement funktioner
+# Movement modules
 def move_from_room_0(direction):
     if direction == "e": 
         state.update({"current_room": 1})
@@ -239,7 +239,7 @@ def dialogue_2(choice):
         return ["Do I want to open the door?"]  
 
 
-# Look funktion
+# Look module
 def look():
     if state["current_room"] == 0:
         return room["room_0"]
@@ -252,7 +252,7 @@ def look():
     elif state["current_room"] == 3:
         return room["room_3"]
 
-# Investigate funktioner
+# Investigate modules
 def investigate_room_0(direction):
     if direction == "s":
         if things_to_find["note1"] == True:

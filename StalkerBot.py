@@ -324,8 +324,6 @@ def investigate_room_2(direction):
         elif direction == "s":
             return ["That's the way to the frontdoor."]
 
-            
-
 
 def investigate_room_3(direction):
     if walk_over_to["fridge"] == True:
@@ -353,6 +351,27 @@ def investigate_room_3(direction):
         elif direction == "w":
             return ["The way to the livingroom."]
 
+# Quit module
+def quit():
+    state.update({"stage": 0})
+    state.update({"current_room": 1})
+    state.update({"dialogue": 0})
+    state.update({"user": None})
+    things_to_find.update({"note1" : False})
+    things_to_find.update({"note2" : False})
+    things_to_find.update({"guts" : False})
+    things_to_find.update({"glass" : False})
+    things_to_find.update({"eyes" : False})
+    things_to_find.update({"pen" : False})
+    things_to_find.update({"key" : False})
+    walk_over_to.update({"window" : False})
+    walk_over_to.update({"fridge" : False})
+    walk_over_to.update({"bed" : False})
+    walk_over_to.update({"frontdoor" : False})
+    investigateable.update({"wall_with_hole" : False})
+    return "Thanks for playing."
+
+
 
 #Main Gameloop
 @client.event
@@ -363,8 +382,7 @@ async def on_message(message):
     if not (message.author.bot):
 
         if contents.startswith("!quit"):
-            await message.channel.send("Thanks for playing.")
-            state.update({"stage": 0})
+            await message.channel.send(quit())
 
         elif contents.startswith("!help"):
             reply = help
@@ -481,9 +499,9 @@ async def on_message(message):
             for n in reply:
                     await message.channel.send(n)
                     await asyncio.sleep(2)
-            state.update({"stage": 0})
-        
-        
+            await message.channel.send(quit())
+            
+                  
 token = get_token()
 client.run(token)
 

@@ -213,7 +213,7 @@ def dialogue_1():
         "'I'm not letting you inside my home. I don't know you.'", "Doe: 'Open the door. Now.'", "'I don't want to.'", "Doe: 'I said open the door. NOW.'",
         "Where is my phone? I need to call the police!", "Doe: 'Don't even think about calling the police. I will kill you before they arrive.'", 
         "Can Doe read my mind? Can you read my mind?! What do I do?", "Doe: 'I'm sorry. I shouldn't have yelled at you. Can you open the door for me, sweetheart?", 
-        "Should I open the door? yes or no?"]
+        "Should I open the door? y/n?"]
 
 def dialogue_2(choice):   
     if choice == "y" and "yes":

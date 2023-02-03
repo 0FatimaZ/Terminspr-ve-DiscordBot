@@ -449,7 +449,7 @@ async def on_message(message):
                     await message.channel.send(n)
                 if state["current_room"] == 2:
                     if state["dialogue"] == 1:
-                        reply = ["I can't leave with Doe at my front door tho", "Maybe I should, just jump out the window."]
+                        reply = ["I can't leave with Doe at my front door tho", "Maybe I should... just jump out the window."]
                         for n in reply:
                             await asyncio.sleep(2)
                             await message.channel.send(n)

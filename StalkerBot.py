@@ -190,8 +190,8 @@ def move_from_room_3(direction):
 def dialogue_0():
     if state["dialogue"] == 0:
         return ["I take a step closer to my door.", "I'm getting nervous now.", "Something definitely feels off...", "...", 
-        "I see an eye, peeping right back at me.", "Frozen with fear, I can do nothing but look right back, at the strange eye on the other side."
         "I move my head to look through the keyhole. I see nothing at first, but as I get used to the darkness...", 
+        "I see an eye, peeping right back at me.", "Frozen with fear, I can do nothing but look right back, at the strange eye on the other side."
         "Unknown: 'My... what a pretty being you are.'", "'Who... who are you?'", 
         "Unknown: 'How about you open the door and let me in.'", "'I'm not letting you inside my home. I don't even know you.'",
         "Unknown: 'But you do know me. If you open the door you could see me.'", "I could look at them through the peephole.",

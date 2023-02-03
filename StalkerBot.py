@@ -79,7 +79,8 @@ help = ["!look gives you a short description of the room that you are currently 
 "!in lets you further investigate whatever is in your choosen direction. ", 
 "Like !walk, to choose direction, type either n, w, e or s.", "E.g. !in w to invesitgate in the western direction", 
 "-", 
-"!quit allows you to exit the game at any time.", 
+"!quit allows you to exit the game at any time.",
+"But just remember that all progress will be lost.", 
 "-"]
 
 
@@ -500,8 +501,8 @@ async def on_message(message):
                     await message.channel.send(n)
                     await asyncio.sleep(2)
             await message.channel.send(quit())
-            
-                  
+
+
 token = get_token()
 client.run(token)
 

@@ -56,7 +56,8 @@ room = {
         
     "room_1" : ["*The bedroom*",
     "It's rather empty in here",
-    "Just my bed and some clothes and trash here and there, scattered arround on the room."],
+    "Just my bed, some clothes and a bit of trash here and there.",
+    "Especially under my bed."],
 
     "room_2" : ["*The livingroom*", 
     "My living room is so empty and lifeless.",
@@ -73,10 +74,10 @@ room = {
 help = ["!look gives you a short description of the room that you are currently in. ", 
 "-",  
 "!walk lets you walk either north, west, east or south from the room that you are in. ", 
-"To choose direction, type either n, w, e or s after typing !walk then send your message. ", "Eg. !walk s, for walking south", 
+"To choose direction, type either n, w, e or s after typing !walk then send your message. ", "E.g. !walk s, for walking south", 
 "-", 
 "!in lets you further investigate whatever is in your choosen direction. ", 
-"Like !walk, to choose direction, type either n, w, e or s.", "Eg. !in w to invesitgate in the western direction", 
+"Like !walk, to choose direction, type either n, w, e or s.", "E.g. !in w to invesitgate in the western direction", 
 "-", 
 "!quit allows you to exit the game at any time.", 
 "-"]
@@ -85,13 +86,12 @@ help = ["!look gives you a short description of the room that you are currently 
 # Dialogues
 def dialogue_0():
     if state["dialogue"] == 0:
-        return ["I take a step closer to my door.", "I'm getting nervous now.", "Something definitely feels off...", "...", 
+        return ["I take a step closer to my door.", "Something definitely feels...", "off...", 
         "I move my head to look through the keyhole. I see nothing at first, but as I get used to the darkness...", 
         "I see an eye, peeping right back at me.", "Frozen with fear, I can do nothing but look right back, at the strange eye on the other side.",
         "Unknown: 'My... what a pretty being you are.'", "'Who... who are you?'", 
         "Unknown: 'How about you open the door and let me in.'", "'I'm not letting you inside my home. I don't even know you.'",
-        "Unknown: 'But you do know me. If you open the door you could see me.'", "I could look at them through the peephole.",
-        "What? Are they covering the peephole? I can't let an unidentified person in my home.", "'Go away. I'm going to call the police.'",
+        "Unknown: 'But you do know me. If you open the door you could see me.'", "'Go away. I'm going to call the police.'",
         "Unkown: 'Nonono, no need to act rash my love. I'm sorry if I'm creeping you out. It's just that we haven't seen each other in so long... I miss you.'",
         "Honestly I'm curious as to who it is.", "'Tell me your name'", "Unknown: 'You could call me babe, love, soulmate, spou-'",
         "'NAME. Give me your name.'", "Unknown: 'Well, I do prefer the petnames, but you, my love, can call me Doe'", 
@@ -247,6 +247,8 @@ def move_from_room_3(direction):
             else:
                 walk_over_to.update({"fridge": True})
                 return ["I walked over to the fridge."]
+        else: 
+            return ["That's where I make the food I eat everyday."]
     
 
 # Investigate modules
@@ -257,7 +259,7 @@ def investigate_room_0(direction):
                 return ["How long has that hole been there?"]
             else: 
                 investigateable.update({"wall_with_hole": True})
-                return ["There's a hole in the wall...", "Next to my shower...", "This building is old...", "...", "Of course there'll be some imperfections..."]
+                return ["There's a hole in the wall...", "Next to my shower...", "...", "This building is old...", "Of course there'll be some imperfections...", "Right...?" ]
         else:
             things_to_find.update({"note1": True})
             return ["There's a note on the wall...", "It says 'YOU ALWAYS LOOK SO LOVELY DARLING <3'.", "...", "I definitely don't know anyone who would write such things about me.", "I crumple up the note and throw it in the toilet.", "How creepy."]
@@ -283,10 +285,10 @@ def investigate_room_1(direction):
                         return ["I can't sleep.", "Not right now.", "Something's...", "Not right..."]
                     else:
                         things_to_find.update({"pen": True})
-                        return ["There's a pen.", "It's covered in lint and feels kinda gross.", "Oh well-", "I put the pen in my pocket.", "Maybe it'll be of use later."]
+                        return ["There's a pen here as well.", "It's covered in lint and feels kinda gross.", "Oh well-", "I put the pen in my pocket.", "Maybe it'll be of use later."]
             else:
                 things_to_find.update({"glass": True})
-                return ["There's something under my bed.", "It's a glass filled with yellow liquid and a note that says 'DRINK ME :)'...", "I better not."]
+                return ["There's something under my bed.", "It's a glass filled with warm yellow liquid and a note that says 'DRINK ME :)'...", "I better not."]
         else:
             return ["It's rather messy around my bed.", "It's probably a lot worse under my bed."]
     else:
@@ -310,14 +312,18 @@ def investigate_room_2(direction):
                 return ["I stare blankly out the window.", "It's dark outside.", "The longer I stare, the more I feel like I can see two creepy eyes watching me."]
         else:
             return ["I can hear a slight tapping...", "which I am guessing is just a branch knocking against my window."]
+    if walk_over_to["frontdoor"] == True:
+        return ["I can hear a faint breathing comming form behind the door."]
     else:
         if direction == "n":
             return ["The way to my bedroom."]
-        
         elif direction == "w":
             return ["My window is that way.", "It's so dark, that the window just looks like a black square from where I'm standing."]
         elif direction == "e":
             return ["The way to the kitchen."]
+        elif direction == "s":
+            return ["That's the way to the frontdoor."]
+
             
 
 
@@ -336,7 +342,7 @@ def investigate_room_3(direction):
                 return ["Apperently I didn't completely close my fridgedoor.", "Weird. I'm normally so cautious about things like that."]
     else:
         if direction == "n":
-            return ["Nothing but dirty dishes that have been piling up"]
+            return ["Nothing but dirty dishes that have been piling up."]
         elif direction == "s":
             if things_to_find["note2"] == True:
                 return ["Looking closer, the wall is stained with the smelly goo.", "When did I last clean this kitchen?"]
@@ -453,21 +459,20 @@ async def on_message(message):
                     reply = investigate_room_1(direction)
                 elif state["current_room"] == 2:
                     reply = investigate_room_2(direction)
-                    if direction == "s":
-                        if state["dialogue"] == 0:
-                            reply = dialogue_0()
-                            state.update({"dialogue": 1})
-                        elif state["dialogue"] == 1 and things_to_find["key"] == True:
-                            reply = dialogue_1()
-                            state.update({"stage": 4})
+                    if walk_over_to["frontdoor"] == True:
+                        if direction == "s":
+                            if state["dialogue"] == 0:
+                                reply = dialogue_0()
+                                state.update({"dialogue": 1})
+                            elif state["dialogue"] == 1 and things_to_find["key"] == True:
+                                reply = dialogue_1()
+                                state.update({"stage": 4})
                 elif state["current_room"] == 3:
                     reply = investigate_room_3(direction)
                 for n in reply:
                     await message.channel.send(n)
                     await asyncio.sleep(2)
                 await message.channel.send(">>")
-            else:
-                await message.channel.send("What should I do?")
         
         elif state["user"] == message.author.id and state["stage"] == 4:
             if contents.startswith("!"):
